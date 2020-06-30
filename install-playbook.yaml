@@ -1,0 +1,42 @@
+---
+-
+  hosts: edge
+  name: "Play 1"
+  tasks:
+
+    -
+      name: "Install required app"
+      yum:
+        name: wget
+        state: present
+        name: unzip
+        state: present
+    -
+      file:
+       path: /var/node
+       state: directory
+    -
+      unarchive:
+       src: 
+       dest: /var/node
+       remote_src: yes
+       mode: a+x
+    -
+      name: name updates
+      replace:
+       path: /var/node/install-centos.sh
+       regexp: '/var/node/new-startup.sh'
+       replace: '/var/node/startup.sh'
+    -
+    -
+      name: name updates
+      replace:
+       path: /var/node/install-centos.sh
+       regexp: 'src/main.js'
+       replace: '/var/node/src/main.js'
+    -
+    -
+      name: Run a script with arguments (free form)
+      shell: /var/node/install-centos.sh
+      ignore_errors: True
+    -
